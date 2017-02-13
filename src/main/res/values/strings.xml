@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Horizontal Scrolling System</string>
+    <string name="instruction">Select Experiment</string>
+    <string name="user_instructions">In this experiment you will be shown an icon. Once you
+        have studied this icon press Ok. Within the following screen please find the icon as quickly as possible.
+    </string>
+    <string name="target_instructions">Please find this icon:</string>
+</resources>

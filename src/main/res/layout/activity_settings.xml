@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.SettingsActivity"
+    android:background="@color/cardview_light_background"
+    android:id="@+id/settingsBackground"
+    android:padding="5dp">
+
+    <!--Includes the custom toolbar-->
+    <include
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Switch
+        android:id="@+id/setBlackBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:textSize="24sp"
+        android:text="Set Black Background" />
+
+
+
+
+</RelativeLayout>

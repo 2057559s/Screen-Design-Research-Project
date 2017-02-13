@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    android:id="@+id/gridBackground1"
+    tools:context=".views.GridActivity">
+
+    <!--Includes the custom toolbar-->
+    <include
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ToggleButton
+        android:id="@+id/setBlackBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="500dp"
+        android:textSize="24sp"
+        android:text="Set Black Background" />
+
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="120dp"
+        android:background="@drawable/arrow_right"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="400dp"
+        android:id="@+id/imageView2" />
+
+
+    <HorizontalScrollView
+        android:id="@+id/HorizontalScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="800dp"
+            android:layout_marginTop="70dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/first_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/second_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/third_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/forth_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fifth_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sixth_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>
+
