@@ -1,30 +1,29 @@
 package com.example.nicholassaunderson.scrollexperimentapplication.views;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.support.v4.widget.NestedScrollView;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.ToggleButton;
 
 import com.example.nicholassaunderson.scrollexperimentapplication.realm.User;
-import com.example.nicholassaunderson.scrollexperimentapplication.views.CustomHorizontalScrollView;
 
 
 import com.example.nicholassaunderson.scrollexperimentapplication.R;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -71,6 +70,9 @@ public class GridActivity extends AppCompatActivity {
     private ToggleButton toggle;
     RelativeLayout gridBackground;
 
+    String fileName = "testing3.csv";
+    FileWriter writer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,18 @@ public class GridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
 
+
+//        File root = Environment.getExternalStorageDirectory();
+//        //File root = Environment.getExternalStorageDirectory();
+//        File file_contents = new File(root, fileName);
+//
+//        try {
+//            writer = new FileWriter(file_contents, true);
+//            System.out.println("writer created");
+//        } catch (IOException e) {
+//            System.out.println("In catch block");
+//            e.printStackTrace();
+//        }
 
 
         scroll = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
@@ -135,7 +149,6 @@ public class GridActivity extends AppCompatActivity {
             });
 
 
-
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -183,6 +196,12 @@ public class GridActivity extends AppCompatActivity {
                         System.out.println(user_id + "," + background_colour + "," + layout + "," +
                                 targetId + "," + (totalTime/1000.0f) + "," + error_clicks + ","
                                 + number_of_swipes + "," + screen_found);
+
+//                        String output = user_id + "," + background_colour + "," + layout + "," +
+//                                targetId + "," + (totalTime/1000.0f) + "," + error_clicks + ","
+//                                + number_of_swipes + "," + screen_found;
+//
+//                        createOutputFile(writer, output);
                         startTime = System.currentTimeMillis();
                         endTime = 0;
                         totalTime = 0;
@@ -312,6 +331,38 @@ public class GridActivity extends AppCompatActivity {
             }
         });
     }
+
+
+//    private static void createOutputFile(FileWriter writer, String contents)
+//    {
+//        try
+//        {
+//            System.out.println("Writer contents: " + writer.getEncoding());
+//            System.out.println("Writer contents: " + contents);
+//            writer.write(contents);
+//            writer.write('\n');
+//
+//
+//        }
+//        catch(IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void onDestroy() {
+//
+//        super.onDestroy();
+//
+//        try {
+//            writer.flush();
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 
 
 

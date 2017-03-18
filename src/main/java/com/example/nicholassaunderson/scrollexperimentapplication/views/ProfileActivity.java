@@ -19,7 +19,7 @@ import static com.example.nicholassaunderson.scrollexperimentapplication.realm.U
 public class ProfileActivity extends AppCompatActivity {
 
     private ArrayList<Integer> participants;
-    int initialId = 0;
+    int initialId = 1;
 
 
     TextView textview;

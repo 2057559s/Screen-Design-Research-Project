@@ -102,7 +102,7 @@ public class GridSizeActivity extends AppCompatActivity {
             //b.setText("" + (i + 1));
             b.setGravity(Gravity.CENTER_HORIZONTAL);
             b.setId(i + 1);
-            if(i<=25){
+            if(i<=24){
                 b.setBackgroundResource(getApplicationContext().getResources().getIdentifier("i_"+String.valueOf(i+1),
                         "drawable", getPackageName()));
             } else{
