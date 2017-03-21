@@ -17,61 +17,69 @@ import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.example.nicholassaunderson.scrollexperimentapplication.realm.User;
-
-
 import com.example.nicholassaunderson.scrollexperimentapplication.R;
-
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 
 public class GridActivity extends AppCompatActivity {
+
+    /*
+    These LinearLayout objects define every row of icons of the screen, where every
+    row holds 8 icons(4 on screen 1, and 4 on screen2)
+     */
     LinearLayout first_layout;
     LinearLayout second_layout;
     LinearLayout third_layout;
     LinearLayout forth_layout;
     LinearLayout fifth_layout;
     LinearLayout sixth_layout;
-    LinearLayout.LayoutParams params;
-    ArrayList<String> buttonIdentifiers;
+
+    /*
+    Retrieves the user id, note that the target id is the same, this is deliberate as the
+    target id can be used to reference which icon the user is looking for.
+     */
+
     int targetId = User.getUserId();
     int user_id = User.getUserId();
 
+    //The screen transition point is the exact point between the screens
     int screen_transition_point = 522;
     boolean found = false;
 
+    //These variables are used together to calculate the time to find dependent variable
     long startTime;
     long endTime;
-
-    float upX;
-    float downX;
-
-    long testStartTime;
-    long testEndTime;
-
     long totalTime;
+
+    //Initially the default acground colour is white
+
     String background_colour = "white";
+    //This activity is for the grid layout, so ut is name STD
     String layout = "STD";
+
+    //To be used for storing the number of error clicks on the wrong target a user can make
     int error_clicks = 0;
     int screen_found;
 
+
+    //Flag is defined here to be used later to aid the screen swipes functionality
     int flag = 1;
     int number_of_swipes = -1;
-
     int counter = 0;
 
+    //This is the arow used to indicated that the user has to scroll right in the beginning
     ImageView rightArrow;
-
-    HorizontalScrollView scroll;
 
     private ToggleButton toggle;
     RelativeLayout gridBackground;
 
-    String fileName = "testing3.csv";
+    String fileName = "output.csv";
     FileWriter writer;
+
+    //This is the horizontal scroll view object, has many uses, such as retrieving screen position
+    HorizontalScrollView scroll;
 
 
     @Override
@@ -82,19 +90,7 @@ public class GridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grid);
 
 
-//        File root = Environment.getExternalStorageDirectory();
-//        //File root = Environment.getExternalStorageDirectory();
-//        File file_contents = new File(root, fileName);
-//
-//        try {
-//            writer = new FileWriter(file_contents, true);
-//            System.out.println("writer created");
-//        } catch (IOException e) {
-//            System.out.println("In catch block");
-//            e.printStackTrace();
-//        }
-
-
+        //The scroll object is assigned to the corresponding XML
         scroll = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
 
         first_layout = (LinearLayout) findViewById(R.id.first_layout);
@@ -104,57 +100,63 @@ public class GridActivity extends AppCompatActivity {
         fifth_layout = (LinearLayout) findViewById(R.id.fifth_layout);
         sixth_layout = (LinearLayout) findViewById(R.id.sixth_layout);
 
+        rightArrow = (ImageView) findViewById(R.id.imageView2);
+
+
         startTime = System.currentTimeMillis();
         endTime = 0;
 
-        //ArrayList of Buttons
+        //ArrayList where the ImageButtons will be stored(Icons)
         final ArrayList<Button> buttonList = new ArrayList<Button>();
 
 
 
-        for(int i=0; i<48; i++) {
-            final Button b = new Button(this);
-            //b.setText("" + (i + 1));
-            b.setGravity(Gravity.CENTER_HORIZONTAL);
-            b.setId(i + 1);
-            b.setBackgroundResource(getApplicationContext().getResources().getIdentifier("i_"+String.valueOf(i+1),
-                    "drawable", getPackageName()));
-            buttonList.add(b);
 
+        /*
+        This is where most of the logic occurs, the for loop creates a new button and assigns a value to it, which is the
+        button id, then the icon image is placed on the button, and finally the button is added to the array list
+         */
+        for(int i=0; i<48; i++) {
+            final Button button = new Button(this);
+            button.setGravity(Gravity.CENTER_HORIZONTAL);
+            button.setId(i + 1);
+            button.setBackgroundResource(getApplicationContext().getResources().getIdentifier("i_"+String.valueOf(i+1),
+                    "drawable", getPackageName()));
+            buttonList.add(button);
+
+            //This listener is used to calculate if a swipe has occured, and which the state the screen is in
             scroll.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-
                     if ((scroll.getScrollX() <= screen_transition_point) && (event.getAction() != 1)) {
-                        //System.out.println("Screen1");
                         if(flag == 1){
                             number_of_swipes++;
                             flag = 2;
                         }
                     }
-
                     if ((scroll.getScrollX() > screen_transition_point) && (event.getAction() != 1)) {
-                        //System.out.println("Screen 2");
                         if(flag == 2){
                                 number_of_swipes++;
                                 flag = 1;
                         }
-
                     }
-
-
-
                     return false;
                 }
             });
 
 
-            b.setOnClickListener(new View.OnClickListener() {
+            /*
+            This onClickClistener is used to check multiple elements, first it adds an error click if the incorrect icon
+            was selected
+             */
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if ((b.getId()) != targetId) {
+                    if ((button.getId()) != targetId) {
                         error_clicks += 1;
                     }
+
+                    //Updates the screen found value, where the button location was found
                     if (scroll.getScrollX() > 400) {
                         screen_found = 2;
                     }
@@ -163,7 +165,8 @@ public class GridActivity extends AppCompatActivity {
                     }
 
 
-                    if((b.getId())== targetId){
+                    //If the user has selected the correct button, then many factors can be calculated
+                    if((button.getId())== targetId){
                         found = true;
 
                         if(screen_found == 1){
@@ -184,47 +187,53 @@ public class GridActivity extends AppCompatActivity {
                             number_of_swipes = 0;
                         }
 
+                        /*
+                        This just means that because the button has been found, the reload of the page will set the position to
+                        screen 1.
+                         */
                         if (scroll.getScrollX() > 1){
                             scroll.setScrollX(0);
                         }
-
-
-
                         counter += 1;
+
+                        //The following calculates the time it took to find the icon
                         endTime = System.currentTimeMillis();
                         totalTime = (endTime-startTime);
+
                         System.out.println(user_id + "," + background_colour + "," + layout + "," +
                                 targetId + "," + (totalTime/1000.0f) + "," + error_clicks + ","
                                 + number_of_swipes + "," + screen_found);
 
-//                        String output = user_id + "," + background_colour + "," + layout + "," +
-//                                targetId + "," + (totalTime/1000.0f) + "," + error_clicks + ","
-//                                + number_of_swipes + "," + screen_found;
-//
-//                        createOutputFile(writer, output);
+                        //All of the variable data is reset for the next trial.
                         startTime = System.currentTimeMillis();
                         endTime = 0;
                         totalTime = 0;
                         error_clicks = 0;
 
-                        //System.out.println("Swipes: " + number_of_swipes);
-                        //System.out.println("doing something");
                         number_of_swipes = -1;
                         flag = 1;
 
                         found = false;
+
+                        /*
+                        The shuffle buttons method is then called, this is what creates the next trial, where all of the buttons
+                        get shuffled within the list and then re-rendered on screen.
+                         */
                         shuffleButtons(buttonList);
 
                     }
-                    //shuffleButtons(buttonList);
-                    //System.out.println(b.getId());
+
+                    /*
+                    This is used to change the background colour after a user has found 5 icons on the white background,
+                    followed by a further 5 on the black background, once all have been found an intent is executed to direct back to the
+                    home screen.
+                     */
                     if(counter > 4){
                         gridBackground.setBackgroundResource(R.drawable.blackbackground);
                         background_colour = "black";
                     } if (counter > 9){
                         startActivity(intent);
-                        //clear screen with information page
-                        //gridBackground1.removeAllViews();
+
                     }
 
                 }
@@ -234,23 +243,23 @@ public class GridActivity extends AppCompatActivity {
         }
 
 
+        //The button list is shuffle onece upon start up
         shuffleButtons(buttonList);
-
-        rightArrow = (ImageView) findViewById(R.id.imageView2);
-
-
-
-
-
     }
 
+
+
+    /*
+    The shuffle buttons method takes the array list of buttons. It first removes all of the views(defined in the
+     corresponding xml file) and removes the view i.e emptying anything in them, then loops through 48 times adding
+     a button to the corresponding row, where the buttons are retrieved from the newly shuffled array list(line 273)
+     */
     private void shuffleButtons(ArrayList<Button> buttonList){
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         params.setMargins(40, 0, 40, 0);
-
 
         first_layout.removeAllViews();
         second_layout.removeAllViews();
@@ -298,6 +307,7 @@ public class GridActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Bacground colour gets initiated at on load of the activity
         setBackgroundColor();
 
     }
@@ -308,15 +318,16 @@ public class GridActivity extends AppCompatActivity {
         return targetId;
     }
 
+
+
+    //A simple method to toggle the background colour of the screen
     public void setBackgroundColor(){
         toggle = (ToggleButton) findViewById(R.id.setBlackBackground);
 
 
         gridBackground = (RelativeLayout) findViewById(R.id.gridBackground1);
 
-        //set the switch to ON
 
-        //attach a listener to check for changes in state
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -333,35 +344,6 @@ public class GridActivity extends AppCompatActivity {
     }
 
 
-//    private static void createOutputFile(FileWriter writer, String contents)
-//    {
-//        try
-//        {
-//            System.out.println("Writer contents: " + writer.getEncoding());
-//            System.out.println("Writer contents: " + contents);
-//            writer.write(contents);
-//            writer.write('\n');
-//
-//
-//        }
-//        catch(IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void onDestroy() {
-//
-//        super.onDestroy();
-//
-//        try {
-//            writer.flush();
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
 
 
@@ -370,13 +352,3 @@ public class GridActivity extends AppCompatActivity {
 
 }
 
-
-/**
- * if(i<=25){
- b.setBackgroundResource(getApplicationContext().getResources().getIdentifier("i_"+String.valueOf(i+1),
- "drawable", getPackageName()));
- } else{
- b.setBackgroundResource(getApplicationContext().getResources().getIdentifier("t_i_"+String.valueOf(i+1),
- "drawable", getPackageName()));
- }
- **/

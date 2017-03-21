@@ -13,8 +13,6 @@ import com.example.nicholassaunderson.scrollexperimentapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ToggleButton toggleButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //This the custom tool bar object
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
@@ -31,8 +30,12 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    
 
+
+    /*
+    The following methods will be used to create Intents for transitioning to the next page,
+    followed by the startActivity method which executes on the Intent
+     */
 
     public void openGrid(View view) {
         Intent intent = new Intent(MainActivity.this, InstructionsActivity.class);
@@ -69,9 +72,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, GridFamActivity.class);
         startActivity(intent);
     }
-
-
-
-
-
 }
