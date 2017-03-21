@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.nicholassaunderson.scrollexperimentapplication.R;
@@ -14,8 +15,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ToggleButton toggleButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -28,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-//    public void showTargetIcon(View view){
-//        Intent intent = new Intent(MainActivity.this, TargetIconActivity.class);
-//        startActivity(intent);
-//    }
-
+    
 
 
     public void openGrid(View view) {
@@ -64,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openProfile(View view) {
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void openGridFam(View view) {
+        Intent intent = new Intent(MainActivity.this, GridFamActivity.class);
         startActivity(intent);
     }
 
